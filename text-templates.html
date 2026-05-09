@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOKI · Text-Vorlagen konsolidieren (UI Mock)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #fafaf9; }
+  .scroll-thin::-webkit-scrollbar { width: 6px; }
+  .scroll-thin::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 3px; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M3 4.5l3 3 3-3'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 0.75rem; appearance: none; }
+  .section-divider { background: linear-gradient(180deg, transparent, #f5f5f4 50%, transparent); }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- =================== SECTION A: Library mit Type-Filter =================== -->
+<nav class="bg-white border-b border-neutral-200 px-4 sm:px-6 lg:px-8 py-3">
+  <div class="max-w-7xl mx-auto flex items-center gap-2 text-sm text-neutral-500">
+    <span>v2</span>
+    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <span class="text-neutral-700 font-medium">Meine Templates</span>
+    <span class="ml-auto text-xs text-neutral-400">URL: /v2/presets?tab=templates&type=text</span>
+  </div>
+</nav>
+
+<header class="bg-white border-b border-neutral-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="flex items-start gap-3">
+      <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
+        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-neutral-900">Meine Templates</h1>
+        <p class="text-sm text-neutral-500 mt-1 max-w-2xl">Erstelle und verwalte deine Prompt-Vorlagen und Collections — für Bilder und für Texte.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+  <!-- Tabs (existierend) -->
+  <div class="border-b border-neutral-200 mb-6">
+    <div class="flex gap-1">
+      <button class="px-4 py-2 text-sm font-semibold text-neutral-900 border-b-2 border-purple-500">
+        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4z"/></svg>
+        Templates
+      </button>
+      <button class="px-4 py-2 text-sm text-neutral-500 hover:text-neutral-900">
+        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14-4H5m14 8H5m14 4H5"/></svg>
+        Collections
+      </button>
+    </div>
+  </div>
+
+  <!-- NEW: Type-Filter Pills (oberhalb der Toolbar) -->
+  <div class="flex items-center gap-3 mb-4">
+    <span class="text-xs font-semibold text-neutral-500 uppercase tracking-wide">Typ:</span>
+    <div class="inline-flex bg-neutral-100 rounded-lg p-1 gap-0.5" role="tablist">
+      <button role="tab" aria-selected="false" class="px-3 py-1.5 text-sm rounded-md text-neutral-600 hover:bg-white">Alle <span class="text-neutral-400 ml-1">(76)</span></button>
+      <button role="tab" aria-selected="false" class="px-3 py-1.5 text-sm rounded-md text-neutral-600 hover:bg-white flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Bilder <span class="text-neutral-400 ml-0.5">(76)</span>
+      </button>
+      <button role="tab" aria-selected="true" class="px-3 py-1.5 text-sm rounded-md bg-white shadow-sm text-neutral-900 font-medium flex items-center gap-1.5 ring-1 ring-purple-300">
+        <svg class="w-3.5 h-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h10M4 18h10"/></svg>
+        Texte <span class="text-purple-600 ml-0.5">(0)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+    <div class="flex items-center gap-2 flex-1">
+      <div class="relative max-w-md flex-1">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" placeholder="Vorlage suchen…" class="w-full pl-9 pr-3 py-2 text-sm border border-neutral-200 rounded-lg bg-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+      </div>
+      <select class="px-3 py-2 text-sm border border-neutral-200 rounded-lg bg-white">
+        <option>Tool: Alle</option>
+        <option>amazon-title-tool</option>
+        <option>amazon-bullets-tool</option>
+        <option>seo-meta-tool</option>
+      </select>
+      <select class="px-3 py-2 text-sm border border-neutral-200 rounded-lg bg-white">
+        <option>Status: Alle</option>
+        <option>Privat</option>
+        <option>Öffentlich</option>
+      </select>
+    </div>
+    <div class="flex items-center gap-2">
+      <div class="inline-flex border border-neutral-200 rounded-lg p-0.5 bg-white">
+        <button class="px-2 py-1 rounded bg-neutral-100"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <button class="px-2 py-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg></button>
+      </div>
+      <button class="px-3 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-lg flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Neue Text-Vorlage
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty-State (today) + 5 example rows (after some are created) -->
+  <div class="bg-white border border-neutral-200 rounded-xl overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-neutral-50 border-b border-neutral-200 text-xs uppercase tracking-wide text-neutral-500">
+        <tr>
+          <th class="text-left px-4 py-3 font-semibold w-10"></th>
+          <th class="text-left px-4 py-3 font-semibold">Name</th>
+          <th class="text-left px-4 py-3 font-semibold">Tool</th>
+          <th class="text-left px-4 py-3 font-semibold">Quelle</th>
+          <th class="text-left px-4 py-3 font-semibold">Status</th>
+          <th class="text-left px-4 py-3 font-semibold">Erstellt</th>
+          <th class="text-right px-4 py-3 font-semibold">Aktionen</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-neutral-100">
+        <!-- System row (read-only, klonbar) -->
+        <tr class="hover:bg-neutral-50">
+          <td class="px-4 py-3"><div class="w-7 h-7 rounded bg-blue-100 flex items-center justify-center"><svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div></td>
+          <td class="px-4 py-3"><div class="font-medium text-neutral-900">Amazon Titel — kompakt</div><div class="text-xs text-neutral-500">Knapper, keyword-dichter Titel mit max. 200 Zeichen.</div></td>
+          <td class="px-4 py-3"><span class="text-xs text-neutral-700 font-mono bg-neutral-100 px-1.5 py-0.5 rounded">amazon-title-tool</span></td>
+          <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-blue-50 text-blue-700 ring-1 ring-blue-200"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>System</span></td>
+          <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Öffentlich</span></td>
+          <td class="px-4 py-3 text-xs text-neutral-500">2026-04-22</td>
+          <td class="px-4 py-3 text-right">
+            <button class="text-xs text-purple-600 hover:text-purple-700 font-medium">Als Vorlage übernehmen</button>
+            <span class="text-neutral-300 mx-2">·</span>
+            <button class="text-xs text-neutral-500 hover:text-neutral-700">Ansehen</button>
+          </td>
+        </tr>
+
+        <!-- System row #2 -->
+        <tr class="hover:bg-neutral-50">
+          <td class="px-4 py-3"><div class="w-7 h-7 rounded bg-blue-100 flex items-center justify-center"><svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div></td>
+          <td class="px-4 py-3"><div class="font-medium text-neutral-900">Bullets — Feature-Benefits</div><div class="text-xs text-neutral-500">5 Bullets im Feature/Benefit-Pattern, max. 250 Zeichen.</div></td>
+          <td class="px-4 py-3"><span class="text-xs text-neutral-700 font-mono bg-neutral-100 px-1.5 py-0.5 rounded">amazon-bullets-tool</span></td>
+          <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-blue-50 text-blue-700 ring-1 ring-blue-200">System</span></td>
+          <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Öffentlich</span></td>
+          <td class="px-4 py-3 text-xs text-neutral-500">2026-04-22</td>
+          <td class="px-4 py-3 text-right">
+            <button class="text-xs text-purple-600 hover:text-purple-700 font-medium">Als Vorlage übernehmen</button>
+            <span class="text-neutral-300 mx-2">·</span>
+            <button class="text-xs text-neutral-500 hover:text-neutral-700">Ansehen</button>
+          </td>
+        </tr>
+
+        <!-- Workspace row #1 (privat) -->
+        <tr class="hover:bg-neutral-50">
+          <td class="px-4 py-3"><div class="w-7 h-7 rounded bg-purple-100 flex items-center justify-center"><svg class="w-3.5 h-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div></td>
+          <td class="px-4 py-3"><div class="font-medium text-neutral-900">Möbel-Titel mit Maßangabe</div><div class="text-xs text-neutral-500">Eigene Vorlage (geforkt von „Amazon Titel — kompakt").</div></td>
+          <td class="px-4 py-3"><span class="text-xs text-neutral-700 font-mono bg-neutral-100 px-1.5 py-0.5 rounded">amazon-title-tool</span></td>
+          <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-purple-50 text-purple-700 ring-1 ring-purple-200"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>Workspace</span></td>
+          <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-neutral-100 text-neutral-700">Privat</span></td>
+          <td class="px-4 py-3 text-xs text-neutral-500">2026-05-08</td>
+          <td class="px-4 py-3 text-right">
+            <button class="text-xs text-neutral-700 hover:text-neutral-900 font-medium">Bearbeiten</button>
+            <span class="text-neutral-300 mx-2">·</span>
+            <button class="text-xs text-red-600 hover:text-red-700">Löschen</button>
+          </td>
+        </tr>
+
+        <!-- Workspace row #2 (öffentlich, monetarisiert) -->
+        <tr class="hover:bg-neutral-50">
+          <td class="px-4 py-3"><div class="w-7 h-7 rounded bg-purple-100 flex items-center justify-center"><svg class="w-3.5 h-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div></td>
+          <td class="px-4 py-3"><div class="font-medium text-neutral-900">SEO-Meta für Möbel-Shops</div><div class="text-xs text-neutral-500">Monetarisiert · 12 Imports · 4.6 ★</div></td>
+          <td class="px-4 py-3"><span class="text-xs text-neutral-700 font-mono bg-neutral-100 px-1.5 py-0.5 rounded">seo-meta-tool</span></td>
+          <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-purple-50 text-purple-700 ring-1 ring-purple-200">Workspace</span></td>
+          <td class="px-4 py-3"><span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700">Öffentlich</span></td>
+          <td class="px-4 py-3 text-xs text-neutral-500">2026-05-01</td>
+          <td class="px-4 py-3 text-right">
+            <button class="text-xs text-neutral-700 hover:text-neutral-900 font-medium">Bearbeiten</button>
+            <span class="text-neutral-300 mx-2">·</span>
+            <button class="text-xs text-neutral-500 hover:text-neutral-700">Stats</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="mt-4 text-sm text-neutral-500 flex items-start gap-2">
+    <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    System-Vorlagen sind read-only. Mit „Als Vorlage übernehmen" klonst du sie als private Workspace-Vorlage und kannst sie anpassen.
+  </p>
+</main>
+
+<!-- =================== SECTION B: PresetEditDialog mit Tool-Code-Selector =================== -->
+<div class="section-divider h-12"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+  <div class="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-3">Edit-Dialog · neu/erweitert für Texte</div>
+
+  <div class="bg-white border border-neutral-200 rounded-xl shadow-xl overflow-hidden max-w-3xl">
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-neutral-200 flex items-center justify-between">
+      <div>
+        <h2 class="text-lg font-semibold text-neutral-900">Möbel-Titel mit Maßangabe</h2>
+        <p class="text-xs text-neutral-500 mt-0.5">Workspace-Vorlage · privat</p>
+      </div>
+      <button class="text-neutral-400 hover:text-neutral-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+    <!-- Modal Tabs -->
+    <div class="flex border-b border-neutral-200 px-6">
+      <button class="px-3 py-2.5 text-sm font-semibold text-neutral-900 border-b-2 border-purple-500">Settings</button>
+      <button class="px-3 py-2.5 text-sm text-neutral-500 hover:text-neutral-700">Veröffentlichung</button>
+      <button class="px-3 py-2.5 text-sm text-neutral-300 cursor-not-allowed" title="Nur für veröffentlichte Vorlagen">Statistik</button>
+    </div>
+    <!-- Modal Body -->
+    <div class="p-6 space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <label class="block">
+          <span class="text-xs font-semibold text-neutral-700 uppercase tracking-wide">Name</span>
+          <input type="text" value="Möbel-Titel mit Maßangabe" class="mt-1 w-full px-3 py-2 text-sm border border-neutral-200 rounded-lg bg-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+        </label>
+        <label class="block">
+          <span class="text-xs font-semibold text-neutral-700 uppercase tracking-wide">Typ</span>
+          <select class="mt-1 w-full px-3 py-2 text-sm border border-neutral-200 rounded-lg bg-neutral-50 text-neutral-500" disabled>
+            <option>Text</option>
+          </select>
+          <span class="text-xs text-neutral-400 mt-1 block">Typ kann nach dem Anlegen nicht geändert werden.</span>
+        </label>
+      </div>
+
+      <!-- NEW: Tool-Code-Selector (nur sichtbar bei template_type='text') -->
+      <label class="block">
+        <span class="text-xs font-semibold text-neutral-700 uppercase tracking-wide">Tool <span class="text-red-500">*</span></span>
+        <select class="mt-1 w-full px-3 py-2 text-sm border border-purple-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-500 outline-none">
+          <option value="amazon-title-tool" selected>Amazon Titel-Tool</option>
+          <option>Amazon Bullets-Tool</option>
+          <option>Amazon Backend-Keywords-Tool</option>
+          <option>Beschreibungs-Tool</option>
+          <option>SEO-Meta-Tool</option>
+        </select>
+        <span class="text-xs text-neutral-500 mt-1 block">Vorlagen erscheinen nur im jeweils gewählten Text-Tool.</span>
+      </label>
+
+      <label class="block">
+        <span class="text-xs font-semibold text-neutral-700 uppercase tracking-wide">System-Prompt</span>
+        <textarea rows="4" class="mt-1 w-full px-3 py-2 text-sm font-mono border border-neutral-200 rounded-lg bg-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">Du bist ein Spezialist für Möbel-Titel auf Amazon. Achte auf knappe Maßangaben (LxBxH in cm) und keyword-dichte Formulierung.</textarea>
+      </label>
+
+      <label class="block">
+        <span class="text-xs font-semibold text-neutral-700 uppercase tracking-wide">User-Prompt</span>
+        <textarea rows="3" class="mt-1 w-full px-3 py-2 text-sm font-mono border border-neutral-200 rounded-lg bg-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">Erstelle einen Amazon-Titel für: {productName}. Maße: {dimensions}. Material: {material}.</textarea>
+      </label>
+    </div>
+    <div class="px-6 py-4 border-t border-neutral-200 flex items-center justify-between bg-neutral-50">
+      <button class="text-sm text-red-600 hover:text-red-700">Vorlage löschen</button>
+      <div class="flex gap-2">
+        <button class="px-4 py-2 text-sm border border-neutral-300 text-neutral-700 rounded-lg hover:bg-white">Abbrechen</button>
+        <button class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-lg">Speichern</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== SECTION C: TextToolPage (after refactor) =================== -->
+<div class="section-divider h-12"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+  <div class="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-3">TextToolPage · vereinfacht</div>
+
+  <div class="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
+    <!-- Left rail -->
+    <aside class="space-y-3">
+      <div class="bg-white border border-neutral-200 rounded-xl p-4">
+        <div class="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-2">Vorlage</div>
+        <select class="w-full px-3 py-2 text-sm border border-neutral-200 rounded-lg bg-white focus:ring-2 focus:ring-purple-500 outline-none">
+          <option>— Keine Vorlage —</option>
+          <optgroup label="System">
+            <option>Amazon Titel — kompakt</option>
+            <option>Amazon Titel — narrativ</option>
+          </optgroup>
+          <optgroup label="Workspace">
+            <option selected>Möbel-Titel mit Maßangabe</option>
+          </optgroup>
+        </select>
+        <div class="mt-3 flex items-center justify-between">
+          <a href="/v2/presets?tab=templates&type=text&tool=amazon-title-tool" class="text-xs text-purple-600 hover:text-purple-700 font-medium flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Vorlagen verwalten
+          </a>
+          <button class="text-xs text-neutral-700 hover:text-neutral-900 font-medium flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Aktuelle als Vorlage
+          </button>
+        </div>
+        <p class="text-[11px] text-neutral-400 mt-2 leading-snug">„Aktuelle als Vorlage" öffnet den gleichen Edit-Dialog wie unter <span class="font-mono">/v2/presets</span>.</p>
+      </div>
+    </aside>
+
+    <!-- Main: Tool form -->
+    <div class="bg-white border border-neutral-200 rounded-xl p-6 space-y-4">
+      <h2 class="text-lg font-semibold text-neutral-900">Amazon Titel-Tool</h2>
+      <label class="block">
+        <span class="text-xs font-semibold text-neutral-700 uppercase tracking-wide">Produktname</span>
+        <input type="text" value="Stehleuchte Walnuss" class="mt-1 w-full px-3 py-2 text-sm border border-neutral-200 rounded-lg bg-white focus:ring-2 focus:ring-purple-500 outline-none">
+      </label>
+      <label class="block">
+        <span class="text-xs font-semibold text-neutral-700 uppercase tracking-wide">Maße</span>
+        <input type="text" value="38x38x180 cm" class="mt-1 w-full px-3 py-2 text-sm border border-neutral-200 rounded-lg bg-white focus:ring-2 focus:ring-purple-500 outline-none">
+      </label>
+      <label class="block">
+        <span class="text-xs font-semibold text-neutral-700 uppercase tracking-wide">Material</span>
+        <input type="text" value="Massivholz Walnuss" class="mt-1 w-full px-3 py-2 text-sm border border-neutral-200 rounded-lg bg-white focus:ring-2 focus:ring-purple-500 outline-none">
+      </label>
+      <button class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-lg flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Generieren
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== Decisions Footer =================== -->
+<div class="section-divider h-12"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mb-12">
+  <div class="bg-white border border-neutral-200 rounded-xl p-6">
+    <h3 class="text-base font-semibold text-neutral-900 mb-3">Entscheidungen (locked)</h3>
+    <ul class="text-sm text-neutral-600 space-y-2">
+      <li class="flex gap-2"><span class="text-emerald-600 font-bold">✓</span><span><strong class="text-neutral-900">Keine neue Tabelle:</strong> <code class="font-mono text-xs bg-neutral-100 px-1 py-0.5 rounded">custom_instructions</code> mit <code class="font-mono text-xs">template_type='text'</code> + <code class="font-mono text-xs">tool_code</code> reicht. 0 Migrationsaufwand.</span></li>
+      <li class="flex gap-2"><span class="text-emerald-600 font-bold">✓</span><span><strong class="text-neutral-900">Keine neue Seite:</strong> <code class="font-mono text-xs bg-neutral-100 px-1 py-0.5 rounded">/v2/presets</code> bekommt nur Type-Filter-Pills + Tool-Code-Selector im Edit-Dialog.</span></li>
+      <li class="flex gap-2"><span class="text-emerald-600 font-bold">✓</span><span><strong class="text-neutral-900">TextToolPage entschlackt:</strong> <code class="font-mono text-xs">SaveTemplateModal</code> + <code class="font-mono text-xs">TemplateManagerDrawer</code> raus. Nur Selector + 2 Buttons („Aktuelle als Vorlage" → öffnet <code class="font-mono text-xs">PresetEditDialog</code>; „Vorlagen verwalten" → Link auf <code class="font-mono text-xs">/v2/presets?type=text</code>).</span></li>
+      <li class="flex gap-2"><span class="text-emerald-600 font-bold">✓</span><span><strong class="text-neutral-900">System vs. Workspace:</strong> Badge-Color (Blue=System / Purple=Workspace), Aktion <em>„Als Vorlage übernehmen"</em> klont System → privates Workspace-Template (<code class="font-mono text-xs">source_public_id</code> bleibt für Tracking).</span></li>
+      <li class="flex gap-2"><span class="text-emerald-600 font-bold">✓</span><span><strong class="text-neutral-900">Edit-Pattern wie bei Bildern:</strong> 3-Tab-Modal (Settings/Veröffentlichung/Statistik), Stats-Tab nur bei <code class="font-mono text-xs">is_public=true</code> aktiv.</span></li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
