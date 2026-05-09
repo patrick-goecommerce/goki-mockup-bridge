@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOKI · Bullet-Mapping konfigurieren (UI Mock)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #fafaf9; }
+  .scroll-thin::-webkit-scrollbar { width: 6px; }
+  .scroll-thin::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 3px; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M3 4.5l3 3 3-3'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 0.75rem; appearance: none; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Top Nav (mini breadcrumb) -->
+<nav class="bg-white border-b border-neutral-200 px-4 sm:px-6 lg:px-8 py-3">
+  <div class="max-w-5xl mx-auto flex items-center gap-2 text-sm text-neutral-500">
+    <span>Workspace-Einstellungen</span>
+    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <span>Integrationen</span>
+    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    <span class="text-neutral-700 font-medium">JTL · Bullet-Mapping</span>
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="bg-white border-b border-neutral-200">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="flex items-start gap-3">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white shadow-md">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-neutral-900">Bullet-Mapping konfigurieren</h1>
+        <p class="text-sm text-neutral-500 mt-1 max-w-2xl">Verknüpfe die fünf Bullet-Slots mit JTL-Custom-Fields pro Sales-Channel. Beim Apply aus dem Remake werden die generierten Bullet Points in die hier konfigurierten Custom-Fields des JTL-Items geschrieben.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Body: 2-column grid -->
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+  <div class="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-6">
+
+    <!-- LEFT: Channel-List -->
+    <aside class="space-y-3">
+      <div class="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-2">Sales-Channels</div>
+
+      <ul class="space-y-1">
+        <li>
+          <button type="button" aria-pressed="true" class="w-full text-left rounded-md px-3 py-2 text-sm border bg-amber-50 border-amber-300 text-amber-900 flex items-center justify-between">
+            <span>amazon-lister</span>
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500 text-white text-[10px] font-bold">5</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" aria-pressed="false" class="w-full text-left rounded-md px-3 py-2 text-sm border bg-white border-neutral-200 text-neutral-700 hover:border-neutral-300 flex items-center justify-between">
+            <span>kaufland</span>
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-200 text-amber-800 text-[10px] font-bold" title="2 von 5 Slots gemapped">2</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" aria-pressed="false" class="w-full text-left rounded-md px-3 py-2 text-sm border bg-white border-neutral-200 text-neutral-700 hover:border-neutral-300 flex items-center justify-between">
+            <span>otto</span>
+            <span class="text-[10px] text-neutral-400 italic">leer</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" aria-pressed="false" class="w-full text-left rounded-md px-3 py-2 text-sm border bg-white border-neutral-200 text-neutral-700 hover:border-neutral-300 flex items-center justify-between">
+            <span>eBay</span>
+            <span class="text-[10px] text-neutral-400 italic">leer</span>
+          </button>
+        </li>
+      </ul>
+
+      <form class="space-y-2 pt-3 border-t border-neutral-200">
+        <label class="block text-xs font-medium text-neutral-600">
+          Channel hinzufügen
+          <input type="text" placeholder="z.B. amazon-de" class="mt-1 block w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-500">
+        </label>
+        <button type="submit" class="text-xs text-amber-600 hover:underline font-medium">
+          + Channel hinzufügen
+        </button>
+      </form>
+
+      <div class="mt-6 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+        <div class="flex items-start gap-2">
+          <svg class="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01"/></svg>
+          <div class="text-xs text-blue-900 leading-relaxed">
+            Custom-Fields müssen vorher in JTL-Wawi angelegt sein. Sales-Channel-IDs entsprechen denen, die das Produkt-Detail im Channel-Picker anzeigt.
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT: Slot-Editor -->
+    <section class="bg-white border border-neutral-200 rounded-xl">
+      <div class="px-5 py-4 border-b border-neutral-200 flex items-center justify-between">
+        <div>
+          <div class="text-xs text-neutral-500">Aktiver Channel</div>
+          <div class="text-base font-semibold text-neutral-900 flex items-center gap-2">
+            amazon-lister
+            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium">Vollständig gemapped</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-xs text-neutral-500">Verfügbare Custom-Fields</div>
+          <div class="text-sm font-medium text-neutral-700">8 in JTL</div>
+        </div>
+      </div>
+
+      <div class="p-5 space-y-4">
+
+        <!-- Bullet 1 -->
+        <div class="grid grid-cols-[80px_1fr] gap-3 items-center">
+          <label for="bullet-1" class="text-sm font-medium text-neutral-700">Bullet 1</label>
+          <select id="bullet-1" class="block w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-500">
+            <option value="42" selected>Amazon Bullet 1 (ID 42 · text)</option>
+            <option value="">— nicht zugeordnet —</option>
+            <option value="40">Amazon Title Suffix (ID 40 · text)</option>
+            <option value="41">Amazon Search Term (ID 41 · text)</option>
+            <option value="43">Amazon Bullet 2 (ID 43 · text)</option>
+            <option value="44">Amazon Bullet 3 (ID 44 · text)</option>
+            <option value="45">Amazon Bullet 4 (ID 45 · text)</option>
+            <option value="46">Amazon Bullet 5 (ID 46 · text)</option>
+            <option value="50">SEO Tags Generator (ID 50 · text)</option>
+          </select>
+        </div>
+
+        <!-- Bullet 2 -->
+        <div class="grid grid-cols-[80px_1fr] gap-3 items-center">
+          <label for="bullet-2" class="text-sm font-medium text-neutral-700">Bullet 2</label>
+          <select id="bullet-2" class="block w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-500">
+            <option value="">— nicht zugeordnet —</option>
+            <option value="40">Amazon Title Suffix (ID 40 · text)</option>
+            <option value="41">Amazon Search Term (ID 41 · text)</option>
+            <option value="42">Amazon Bullet 1 (ID 42 · text)</option>
+            <option value="43" selected>Amazon Bullet 2 (ID 43 · text)</option>
+            <option value="44">Amazon Bullet 3 (ID 44 · text)</option>
+            <option value="45">Amazon Bullet 4 (ID 45 · text)</option>
+            <option value="46">Amazon Bullet 5 (ID 46 · text)</option>
+            <option value="50">SEO Tags Generator (ID 50 · text)</option>
+          </select>
+        </div>
+
+        <!-- Bullet 3 -->
+        <div class="grid grid-cols-[80px_1fr] gap-3 items-center">
+          <label for="bullet-3" class="text-sm font-medium text-neutral-700">Bullet 3</label>
+          <select id="bullet-3" class="block w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-500">
+            <option value="">— nicht zugeordnet —</option>
+            <option value="40">Amazon Title Suffix (ID 40 · text)</option>
+            <option value="41">Amazon Search Term (ID 41 · text)</option>
+            <option value="42">Amazon Bullet 1 (ID 42 · text)</option>
+            <option value="43">Amazon Bullet 2 (ID 43 · text)</option>
+            <option value="44" selected>Amazon Bullet 3 (ID 44 · text)</option>
+            <option value="45">Amazon Bullet 4 (ID 45 · text)</option>
+            <option value="46">Amazon Bullet 5 (ID 46 · text)</option>
+            <option value="50">SEO Tags Generator (ID 50 · text)</option>
+          </select>
+        </div>
+
+        <!-- Bullet 4 -->
+        <div class="grid grid-cols-[80px_1fr] gap-3 items-center">
+          <label for="bullet-4" class="text-sm font-medium text-neutral-700">Bullet 4</label>
+          <select id="bullet-4" class="block w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-500">
+            <option value="">— nicht zugeordnet —</option>
+            <option value="40">Amazon Title Suffix (ID 40 · text)</option>
+            <option value="41">Amazon Search Term (ID 41 · text)</option>
+            <option value="42">Amazon Bullet 1 (ID 42 · text)</option>
+            <option value="43">Amazon Bullet 2 (ID 43 · text)</option>
+            <option value="44">Amazon Bullet 3 (ID 44 · text)</option>
+            <option value="45" selected>Amazon Bullet 4 (ID 45 · text)</option>
+            <option value="46">Amazon Bullet 5 (ID 46 · text)</option>
+            <option value="50">SEO Tags Generator (ID 50 · text)</option>
+          </select>
+        </div>
+
+        <!-- Bullet 5 -->
+        <div class="grid grid-cols-[80px_1fr] gap-3 items-center">
+          <label for="bullet-5" class="text-sm font-medium text-neutral-700">Bullet 5</label>
+          <select id="bullet-5" class="block w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-500">
+            <option value="">— nicht zugeordnet —</option>
+            <option value="40">Amazon Title Suffix (ID 40 · text)</option>
+            <option value="41">Amazon Search Term (ID 41 · text)</option>
+            <option value="42">Amazon Bullet 1 (ID 42 · text)</option>
+            <option value="43">Amazon Bullet 2 (ID 43 · text)</option>
+            <option value="44">Amazon Bullet 3 (ID 44 · text)</option>
+            <option value="45">Amazon Bullet 4 (ID 45 · text)</option>
+            <option value="46" selected>Amazon Bullet 5 (ID 46 · text)</option>
+            <option value="50">SEO Tags Generator (ID 50 · text)</option>
+          </select>
+        </div>
+
+        <!-- Mapping Hint when not all set -->
+        <div class="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-900 flex items-start gap-2 hidden" id="incomplete-hint">
+          <svg class="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div>2 von 5 Slots gemapped. Beim Apply werden nur diese übertragen, die übrigen bleiben leer.</div>
+        </div>
+
+      </div>
+
+      <!-- Save Footer -->
+      <div class="px-5 py-4 border-t border-neutral-200 bg-neutral-50/50 rounded-b-xl flex items-center justify-between gap-3">
+        <div class="text-xs text-neutral-500">
+          Änderungen sind nicht gespeichert.
+        </div>
+        <div class="flex gap-2">
+          <button type="button" class="px-4 py-2 text-sm rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-100">
+            Abbrechen
+          </button>
+          <button type="button" class="px-4 py-2 text-sm rounded-lg bg-amber-500 text-white hover:bg-amber-600 font-medium shadow-sm">
+            Mapping speichern
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Empty state alternative (kaufland with no fields) — shown commented for reference -->
+  <details class="mt-6 max-w-3xl mx-auto text-xs text-neutral-500">
+    <summary class="cursor-pointer hover:text-neutral-700">Variante: Channel ohne Custom-Fields</summary>
+    <div class="mt-3 p-5 bg-white border border-neutral-200 rounded-xl text-center">
+      <svg class="w-8 h-8 mx-auto text-neutral-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2"/></svg>
+      <div class="text-sm text-neutral-700 font-medium mb-1">Keine Custom-Fields gefunden</div>
+      <div class="text-xs text-neutral-500 max-w-md mx-auto">Bitte Custom-Fields zuerst in JTL-Wawi anlegen (Items → Eigenschaften → Custom Field), dann hier mappen.</div>
+    </div>
+  </details>
+
+</main>
+
+<footer class="text-center text-xs text-neutral-400 py-8">
+  GOKI Mockup · Bullet-Mapping (FU #4 + Settings-Page) · Branch <code class="text-amber-600">cursor/remake-bridge-pr1-overlay-skeleton</code>
+</footer>
+
+</body>
+</html>
